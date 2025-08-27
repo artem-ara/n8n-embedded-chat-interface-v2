@@ -1,17 +1,17 @@
 <template>
 	<div class="flex h-full flex-col justify-between gap-2">
 		<div class="h-full overflow-hidden">
-			<div class="h-full overflow-y-auto bg-neutral-50 p-3 pb-0 dark:bg-neutral-900" id="chat-messages-container">
+			<div class="h-full overflow-y-auto bg-neutral-50 p-2 pb-0 dark:bg-neutral-900" id="chat-messages-container">
 				<h3 v-if="messages.length === 0" class="flex h-full items-center justify-center font-semibold">
 					{{ t("helpPrompt") }}
 				</h3>
 				<div v-else>
-					<div v-for="(msg, idx) in messages" :key="idx" class="mb-3">
+					<div v-for="(msg, idx) in messages" :key="idx" class="mb-2">
 						<div :class="msg.role === 'user' ? 'text-right' : 'text-left'">
-							<span v-if="msg.role === 'user'" class="inline-block max-w-[80%] rounded-2xl bg-primary px-4 py-2 text-white shadow-sm">
+							<span v-if="msg.role === 'user'" class="inline-block max-w-[80%] whitespace-pre-wrap break-words rounded-2xl bg-primary px-3 py-2 text-white shadow-sm">
 								{{ msg.content }}
 							</span>
-							<div v-else class="inline-block max-w-[90%] rounded-xl border border-neutral-200 bg-white p-4 text-left shadow-sm dark:border-neutral-800 dark:bg-neutral-950">
+							<div v-else class="inline-block max-w-[80%] whitespace-pre-wrap break-words rounded-xl border border-neutral-200 bg-white p-3 text-left shadow-sm dark:border-neutral-800 dark:bg-neutral-950">
 								<Renderer :content="msg.content" />
 							</div>
 						</div>
@@ -20,7 +20,7 @@
 			</div>
 		</div>
 
-		<div class="bg-neutral-50 p-3 pt-0 dark:bg-neutral-900">
+		<div class="bg-neutral-50 p-2 pt-0 dark:bg-neutral-900">
 			<div :class="{ '!border-primary': focused }" class="relative mx-auto w-full max-w-[666px] rounded-md border bg-white p-2 duration-200 hover:border-primary/40 dark:border-zinc-700 dark:bg-zinc-900">
 				<!-- chat input with side send button; hidden when loading -->
 				<div v-if="!isLoading" class="flex items-end gap-2">

@@ -16,7 +16,11 @@
 			</div>
 		</header>
 		<!-- For testing -->
-		<N8nEmbeddedChatInterface label="n8n Chat Demo" description="This is a n8n Chat Demo" :hostname="testUrl" mode="n8n" open-on-start="true" initial-message="Hello, how are you?" />
+		<N8nEmbeddedChatInterface lang="ru" label="n8n Chat Demo" description="This is a n8n Chat Demo" :hostname="testUrl" mode="n8n" open-on-start="true" initial-message="👋 Здравствуйте!
+
+Вас приветствует AI-ассистент SkyWay Group. Помогаем с легализацией, регистрацией авто и ведением бизнеса в Польше.
+
+Нужна помощь? Просто напишите свой запрос — я подскажу, с чего начать!" />
 	</div>
 </template>
 <script setup>

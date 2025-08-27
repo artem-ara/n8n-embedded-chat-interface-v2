@@ -1,6 +1,7 @@
 import { createGlobalState } from "@vueuse/core";
 import { useToast } from "@/components/ui/toast/use-toast";
 import type { N8nMessageResponse } from "@/types/chat";
+import i18n from "@/i18n";
 
 export const useN8n = createGlobalState(() => {
 	const { appConfig } = useApp();
@@ -19,7 +20,7 @@ export const useN8n = createGlobalState(() => {
 		}
 
 		messages.value.push({ role: "user", content: chatInput });
-		messages.value.push({ role: "assistant", content: "Thinking..." });
+		messages.value.push({ role: "assistant", content: (i18n as any).global.t("thinking") as string });
 
 		isLoading.value = true;
 
@@ -39,8 +40,8 @@ export const useN8n = createGlobalState(() => {
 			messages.value[messages.value.length - 1] = { role: "assistant", content: answer };
 			userInput.value = "";
 		} catch (error) {
-			messages.value[messages.value.length - 1] = { role: "assistant", content: "Fehler: " + (error as any).message };
-			toast({ title: "Fehler bei der Anfrage", variant: "destructive" });
+			messages.value[messages.value.length - 1] = { role: "assistant", content: "Ошибка: " + (error as any).message };
+			toast({ title: "Ошибка запроса", variant: "destructive" });
 		} finally {
 			isLoading.value = false;
 		}
