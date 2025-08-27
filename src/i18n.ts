@@ -9,12 +9,6 @@ const messages = {
 		helpPrompt: "What can I help with?",
 		askAnything: "Ask anything...",
 	},
-	de: {
-		uploadingArtifacts: "Lade Anhänge hoch",
-		thinking: "Denke nach...",
-		helpPrompt: "Womit kann ich helfen?",
-		askAnything: "Frag mich...",
-	},
 	ru: {
 		uploadingArtifacts: "Загрузка вложений",
 		thinking: "Думаю...",
@@ -37,8 +31,8 @@ const messages = {
 
 const i18n = createI18n({
 	legacy: false, // Use Composition API
-	locale: "en", // Default language
-	fallbackLocale: "en",
+	locale: "ru", // Default language
+	fallbackLocale: "ru",
 	messages,
 });
 

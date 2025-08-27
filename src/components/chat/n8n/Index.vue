@@ -22,12 +22,11 @@
 
 		<div class="bg-neutral-50 p-3 pt-0 dark:bg-neutral-900">
 			<div :class="{ '!border-primary': focused }" class="relative mx-auto w-full max-w-[666px] rounded-md border bg-white p-2 duration-200 hover:border-primary/40 dark:border-zinc-700 dark:bg-zinc-900">
-				<!-- chat input with side send button -->
-				<div class="flex items-end gap-2">
-					<Textarea :disabled="isLoading" @keydown.enter.exact.prevent="handleSend()" v-if="!isLoading" v-model="userInput" :class="focused ? 'h-[84px]' : 'h-[40px]'" class="flex-1 resize-none transition-all duration-200" @blur="focused = false" :placeholder="t('askAnything')" @click="focused = true" />
+				<!-- chat input with side send button; hidden when loading -->
+				<div v-if="!isLoading" class="flex items-end gap-2">
+					<Textarea :disabled="isLoading" @keydown.enter.exact.prevent="handleSend()" v-model="userInput" :class="focused ? 'h-[84px]' : 'h-[40px]'" class="flex-1 resize-none transition-all duration-200" @blur="focused = false" :placeholder="t('askAnything')" @click="focused = true" />
 					<div class="flex items-center gap-2">
-						<Thinking v-if="isLoading" class="m-[5px]" />
-						<Button :disabled="isLoading || !userInput" class="size-9 rounded-full p-0" @click="handleSend()">
+						<Button :disabled="!userInput" class="size-9 rounded-full p-0" @click="handleSend()">
 							<PaperPlaneIcon class="text-lg" />
 						</Button>
 					</div>
@@ -40,11 +39,9 @@
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import PaperPlaneIcon from "~icons/fluent/send-24-regular";
-import Thinking from "@/components/Thinking.vue";
-import { useN8n } from "@/stores/n8n";
 import Renderer from "@/components/markdown/Renderer.vue";
 import { useI18n } from "vue-i18n";
-import { onMounted } from "vue";
+import { onMounted, nextTick, watch } from "vue";
 
 const { t } = useI18n();
 const { messages, userInput, sendMessage, isLoading, initializeChat } = useN8n();
@@ -56,6 +53,19 @@ const handleSend = async () => {
     userInput.value = "";
     await sendMessage(value);
 };
+
+// Auto-scroll to the latest message whenever the list changes
+watch(
+    () => messages.value.length,
+    async () => {
+        await nextTick();
+        const container = document.getElementById("chat-messages-container");
+        if (container) {
+            container.scrollTop = container.scrollHeight;
+        }
+    },
+    { immediate: true }
+);
 
 onMounted(() => {
 	initializeChat();

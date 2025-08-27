@@ -3,7 +3,6 @@
 		<!-- Toolbar -->
 		<header class="sticky top-0 z-50 flex items-center justify-between bg-white/80 px-6 py-3 shadow-md backdrop-blur-md dark:bg-neutral-900/80">
 			<div class="flex items-center gap-2">
-				<button class="rounded-md bg-primary px-4 py-2 text-white" @click="setLocale('de')">Deutsch</button>
 				<button class="rounded-md bg-primary px-4 py-2 text-white" @click="setLocale('en')">English</button>
 				<button class="rounded-md bg-primary px-4 py-2 text-white" @click="setLocale('ru')">Русский</button>
 				<button class="rounded-md bg-primary px-4 py-2 text-white" @click="setLocale('uk')">Українська</button>
