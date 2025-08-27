@@ -1,6 +1,6 @@
 {
-	"name": "n8n-embedded-chat-interface",
-	"version": "0.4.0",
+	"name": "n8n-embedded-chat-interface-v2",
+	"version": "0.5.0",
 	"private": false,
 	"type": "module",
 	"main": "output/index.js",
@@ -9,7 +9,7 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/symbiosika/n8n-embedded-chat-interface"
+		"url": "https://github.com/symbiosika/n8n-embedded-chat-interface-v2"
 	},
 	"keywords": [
 		"n8n",
@@ -19,7 +19,7 @@
 		"vue",
 		"typescript"
 	],
-	"author": "symbiosika",
+	"author": "iteg09",
 	"license": "Apache-2.0",
 	"scripts": {
 		"dev": "run-p tailwind:watch vite:dev",
