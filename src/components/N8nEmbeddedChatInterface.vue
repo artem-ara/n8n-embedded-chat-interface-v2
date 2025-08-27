@@ -6,7 +6,7 @@
 		</span>
 	</div>
 
-	<div v-if="show" :class="[isMaximized ? 'inset-0' : 'shadow-main-ui bottom-20 right-4 h-[460px] w-80 rounded-md border', 'fixed overflow-hidden bg-white dark:bg-neutral-950']">
+	<div v-if="show" :class="['shadow-main-ui bottom-20 right-4 h-[552px] w-[480px] rounded-md border', 'fixed overflow-hidden bg-white dark:bg-neutral-950']">
 		<div class="flex h-10 items-center justify-between bg-primary p-2">
 			<h1 class="text-sm text-white">{{ appConfig.label }}</h1>
 			<div class="flex items-center">
@@ -19,10 +19,6 @@
 					<SunIcon v-if="!isDark" />
 					<MoonIcon v-else />
 				</button> -->
-				<button class="flex size-7 cursor-pointer items-center justify-center rounded-md text-white hover:bg-white/15" @click="isMaximized = !isMaximized">
-					<Maximize v-if="!isMaximized" />
-					<ShrinkIcon v-else />
-				</button>
 			</div>
 		</div>
 		<div class="h-[calc(100%-40px)] overflow-auto">

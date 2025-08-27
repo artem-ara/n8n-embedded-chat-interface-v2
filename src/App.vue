@@ -5,6 +5,8 @@
 			<div class="flex items-center gap-2">
 				<button class="rounded-md bg-primary px-4 py-2 text-white" @click="setLocale('de')">Deutsch</button>
 				<button class="rounded-md bg-primary px-4 py-2 text-white" @click="setLocale('en')">English</button>
+				<button class="rounded-md bg-primary px-4 py-2 text-white" @click="setLocale('ru')">Русский</button>
+				<button class="rounded-md bg-primary px-4 py-2 text-white" @click="setLocale('uk')">Українська</button>
 			</div>
 			<div class="flex items-center gap-4">
 				<span class="text-black dark:text-red-500">Mode: {{ isDark ? "Dark" : "Light" }}</span>
@@ -24,7 +26,7 @@ import { useI18n } from "vue-i18n";
 import { useDark, useToggle } from "@vueuse/core";
 import N8nEmbeddedChatInterface from "./components/N8nEmbeddedChatInterface.vue";
 
-const testUrl = ref(import.meta.env.VITE_N8N_TEST_WEBHOOK_URL ?? "");
+const testUrl = "https://artemios99.app.n8n.cloud/webhook/2c25fc90-4093-49a1-a18a-a38791697dcd";
 
 // Use vue-i18n composable
 const { locale } = useI18n();
