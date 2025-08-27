@@ -15,6 +15,24 @@ const messages = {
 		helpPrompt: "Womit kann ich helfen?",
 		askAnything: "Frag mich...",
 	},
+	ru: {
+		uploadingArtifacts: "Загрузка вложений",
+		thinking: "Думаю...",
+		helpPrompt: "Чем я могу помочь?",
+		askAnything: "Спросите что угодно...",
+	},
+	uk: {
+		uploadingArtifacts: "Завантаження вкладень",
+		thinking: "Думаю...",
+		helpPrompt: "Чим я можу допомогти?",
+		askAnything: "Запитайте що завгодно...",
+	},
+	pl: {
+		uploadingArtifacts: "Przesyłanie załączników",
+		thinking: "Myślę...",
+		helpPrompt: "W czym mogę pomóc?",
+		askAnything: "Zadaj dowolne pytanie...",
+	},
 };
 
 const i18n = createI18n({

@@ -4,6 +4,10 @@ import i18n from "./i18n";
 import { useCustomColors, type ColorProps } from "./composables/useCustomColors";
 
 class N8nEmbeddedChatInterfaceElement extends HTMLElement {
+	static get observedAttributes() {
+		return ["locale"];
+	}
+
 	connectedCallback() {
 		if (!this.shadowRoot) {
 			this.attachShadow({ mode: "open" });
@@ -23,7 +27,23 @@ class N8nEmbeddedChatInterfaceElement extends HTMLElement {
 
 		const app = createApp(N8nEmbeddedChatInterface, props);
 		app.use(i18n);
+		// Set locale from attribute if provided
+		const initialLocale = this.getAttribute("locale");
+		if (initialLocale && (i18n as any).global) {
+			// vue-i18n v9 composition API
+			(i18n as any).global.locale.value = initialLocale;
+		}
 		app.mount(mountPoint);
+	}
+
+	attributeChangedCallback(name: string, _oldValue: string | null, newValue: string | null) {
+		if (name === "locale" && newValue && (i18n as any).global) {
+			try {
+				(i18n as any).global.locale.value = newValue;
+			} catch (e) {
+				console.warn("Failed to set locale:", e);
+			}
+		}
 	}
 
 	// Generate custom color CSS based on attributes using the secure composable
