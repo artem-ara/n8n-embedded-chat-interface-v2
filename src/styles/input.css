@@ -50,4 +50,57 @@
 	.shadow-main-ui {
 		box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 	}
+
+	/* Override any potential conflicting styles */
+	.chat-interface-top-level *,
+	.chat-button-top-level * {
+		z-index: inherit !important;
+	}
+
+	/* Force chat above all other elements including modals */
+	.chat-interface-top-level,
+	.chat-button-top-level {
+		/* Maximum z-index to ensure it's above everything */
+		z-index: 999999 !important;
+		/* Force position fixed */
+		position: fixed !important;
+		/* Ensure it's not affected by parent stacking contexts */
+		isolation: isolate !important;
+		/* Force hardware acceleration */
+		transform: translate3d(0, 0, 0) !important;
+		/* Prevent any interference */
+		pointer-events: auto !important;
+		/* Ensure visibility */
+		visibility: visible !important;
+		opacity: 1 !important;
+		/* Mobile optimization */
+		-webkit-overflow-scrolling: touch !important;
+		overscroll-behavior: contain !important;
+		/* Additional properties for maximum top-level positioning */
+		will-change: transform !important;
+		contain: layout style paint !important;
+		/* Ensure it's above all other elements */
+		isolation: isolate !important;
+	}
+
+	.chat-button-top-level {
+		/* Ensure button is touch-friendly on mobile */
+		min-width: 48px !important;
+		min-height: 48px !important;
+		/* Improve touch target */
+		touch-action: manipulation !important;
+	}
+
+	/* Prevent zoom on input focus */
+	.chat-interface-top-level input,
+	.chat-interface-top-level textarea {
+		font-size: 16px !important;
+		transform: none !important;
+	}
+
+	/* Improve scrolling on mobile */
+	.chat-interface-top-level {
+		overscroll-behavior: contain !important;
+		-webkit-overflow-scrolling: touch !important;
+	}
 }

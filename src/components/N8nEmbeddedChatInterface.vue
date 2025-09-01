@@ -1,24 +1,37 @@
 <template>
-	<div class="fixed bottom-4 right-4 size-14 cursor-pointer rounded-full bg-primary" @click="show = !show">
-		<span class="flex h-full select-none items-center justify-center text-xl text-white [&>*]:size-8">
+	<div class="fixed bottom-4 right-4 cursor-pointer rounded-full bg-primary z-[999999] chat-button-top-level shadow-lg hover:shadow-xl transition-shadow duration-200" 
+		:class="[
+			// Responsive button sizing
+			'size-12 sm:size-14',
+			// Ensure button is always visible on mobile
+			'min-w-[48px] min-h-[48px]'
+		]"
+		@click="show = !show">
+		<span class="flex h-full select-none items-center justify-center text-white transition-colors duration-200" 
+			:class="[
+				// Responsive icon sizing
+				'text-lg sm:text-xl',
+				// Ensure icon is always visible
+				'[&>*]:size-6 sm:[&>*]:size-8'
+			]">
 			<Question v-if="!show" />
 			<Close v-else />
 		</span>
 	</div>
 
-	<div v-if="show" :class="['shadow-main-ui bottom-20 right-4 h-[552px] w-[480px] rounded-md border', 'fixed overflow-hidden bg-white dark:bg-neutral-950']">
+	<div v-if="show" :class="[
+		'shadow-main-ui rounded-md border fixed overflow-hidden bg-white dark:bg-neutral-950 z-[999999] chat-interface-top-level',
+		// Mobile responsive sizing
+		'h-[calc(100vh-120px)] w-[calc(100vw-32px)] max-h-[600px] max-w-[480px]',
+		'sm:h-[552px] sm:w-[480px]',
+		'min-h-[400px] min-w-[280px]',
+		// Mobile responsive positioning
+		'bottom-20 right-4 sm:bottom-20 sm:right-4',
+		'left-4 sm:left-auto'
+	]">
 		<div class="flex h-10 items-center justify-between bg-primary p-2">
 			<h1 class="text-sm text-white">{{ appConfig.label }}</h1>
 			<div class="flex items-center">
-				<!-- TODO: add settings icon -->
-				<!-- <button class="flex size-7 cursor-pointer items-center justify-center rounded-md p-[5px] text-white hover:bg-white/15">
-					<SettingsIcon />
-				</button> -->
-				<!-- TODO: add dark mode toggle -->
-				<!-- <button class="mr-1 flex size-7 cursor-pointer items-center justify-center rounded-md text-white hover:bg-white/15" @click="toggleDark()">
-					<SunIcon v-if="!isDark" />
-					<MoonIcon v-else />
-				</button> -->
 			</div>
 		</div>
 		<div class="h-[calc(100%-40px)] overflow-auto">
@@ -28,7 +41,6 @@
 			</template>
 		</div>
 	</div>
-	<!-- toaster -->
 	<Toaster />
 </template>
 

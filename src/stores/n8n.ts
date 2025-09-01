@@ -20,7 +20,7 @@ export const useN8n = createGlobalState(() => {
 		}
 
 		messages.value.push({ role: "user", content: chatInput });
-		messages.value.push({ role: "assistant", content: (i18n as any).global.t("thinking") as string });
+		messages.value.push({ role: "assistant", content: "THINKING_ANIMATION" });
 
 		isLoading.value = true;
 

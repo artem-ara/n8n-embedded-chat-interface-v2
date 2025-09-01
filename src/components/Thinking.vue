@@ -1,58 +1,43 @@
 <template>
-  <div class="thinking-chip-wrapper">
-    <span class="thinking-chip">
-      <span class="chip-text">Thinking</span>
-    </span>
-  </div>
+	<div class="flex items-center justify-center py-3">
+		<div class="flex items-center space-x-1.5">
+			<div 
+				v-for="i in 3" 
+				:key="i"
+				class="w-2 h-2 bg-primary/60 rounded-full thinking-dot"
+				:style="{ animationDelay: `${(i - 1) * 0.2}s` }"
+			></div>
+		</div>
+	</div>
 </template>
 
 <script setup lang="ts">
-// Keine Props mehr nötig
+// No additional logic needed for this simple animation component
 </script>
 
 <style scoped>
-.thinking-chip-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+@keyframes thinking-bounce {
+	0%, 80%, 100% {
+		transform: translateY(0) scale(1);
+		opacity: 0.6;
+	}
+	40% {
+		transform: translateY(-12px) scale(1.1);
+		opacity: 1;
+	}
 }
 
-.thinking-chip {
-  position: relative;
-  display: inline-block;
-  padding: 0.3em 0.8em;
-  border-radius: 999px;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(80, 0, 80, 0.08);
-  overflow: hidden;
-  font-weight: 500;
-  font-size: 0.85em;
-  min-width: 70px;
+.thinking-dot {
+	animation: thinking-bounce 1.4s infinite ease-in-out;
 }
 
-.chip-text {
-  position: relative;
-  letter-spacing: 0.04em;
-  background: linear-gradient(90deg, 
-    #a7476f 0%, 
-    #6a5cff 25%, 
-    #a7476f 50%, 
-    #6a5cff 75%, 
-    #a7476f 100%);
-  background-size: 200% 100%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: text-gradient-slide 2s ease-in-out infinite;
+/* Dark mode support */
+.dark .thinking-dot {
+	background-color: rgb(59 130 246 / 0.7);
 }
 
-@keyframes text-gradient-slide {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+/* Light mode optimization */
+.light .thinking-dot {
+	background-color: rgb(59 130 246 / 0.6);
 }
 </style>
