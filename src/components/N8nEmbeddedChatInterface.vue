@@ -44,7 +44,14 @@
 			<div class="flex h-10 items-center justify-between bg-primary p-2">
 				<h1 class="text-sm font-medium text-white truncate">{{ appConfig.label }}</h1>
 				<div class="flex items-center space-x-2">
-					<!-- Optional: Add minimize/maximize buttons here -->
+					<!-- Close button -->
+					<button 
+						@click="show = false" 
+						class="flex items-center justify-center w-6 h-6 rounded hover:bg-white/20 transition-colors duration-200"
+						aria-label="Закрыть чат"
+					>
+						<Close class="w-4 h-4 text-white" />
+					</button>
 				</div>
 			</div>
 			
@@ -56,8 +63,6 @@
 			</div>
 		</div>
 	</Transition>
-
-
 
 	<Toaster />
 </template>
@@ -73,7 +78,7 @@ import ChatN8n from "@/components/chat/n8n/Index.vue";
 
 import { useDark, useToggle } from "@vueuse/core";
 import { useApp } from "@/stores/App";
-import { onBeforeMount, onMounted, onUnmounted } from "vue";
+import { onBeforeMount, onMounted, onUnmounted, watch } from "vue";
 
 const { isMaximized, show, appConfig } = useApp();
 
@@ -177,37 +182,156 @@ onMounted(() => {
 	transform: translateY(20px) scale(0.95);
 }
 
+/* Ensure button is always clickable and properly positioned */
+.chat-button-top-level {
+	pointer-events: auto !important;
+	position: fixed !important;
+	bottom: 1rem !important;
+	right: 1rem !important;
+	z-index: 999999 !important;
+	
+	/* Обеспечиваем что кнопка не выходит за пределы экрана */
+	max-width: calc(100vw - 2rem) !important;
+	
+	/* Hover эффекты */
+	transition: all 0.3s ease !important;
+}
 
+.chat-button-top-level:hover {
+	transform: scale(1.05) !important;
+	box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Chat interface positioning */
+.chat-interface-top-level {
+	will-change: transform, opacity !important;
+	position: fixed !important;
+	z-index: 999998 !important;
+	
+	/* Positioning */
+	bottom: 5.5rem !important;
+	right: 1rem !important;
+	
+	/* Sizing constraints */
+	max-width: calc(100vw - 2rem) !important;
+	max-height: calc(100vh - 7rem) !important;
+	
+	/* Shadow and border */
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15) !important;
+	border-radius: 15px !important;
+	overflow: hidden !important;
+}
 
 /* Safe area support for mobile devices */
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
 	.mb-safe {
-		margin-bottom: env(safe-area-inset-bottom, 1rem);
+		margin-bottom: env(safe-area-inset-bottom, 1rem) !important;
 	}
 	.mr-safe {
-		margin-right: env(safe-area-inset-right, 1rem);
+		margin-right: env(safe-area-inset-right, 1rem) !important;
 	}
 	.ml-safe {
-		margin-left: env(safe-area-inset-left, 1rem);
+		margin-left: env(safe-area-inset-left, 1rem) !important;
 	}
-}
-
-/* Ensure button is always clickable */
-.chat-button-top-level {
-	pointer-events: auto;
-}
-
-/* Smooth transitions for all interactive elements */
-.chat-button-top-level,
-.chat-interface-top-level {
-	will-change: transform, opacity;
 }
 
 /* Mobile specific improvements */
 @media (max-width: 639px) {
-	.chat-interface-top-level {
-		border-radius: 0.75rem 0.75rem 0 0;
-		border-bottom: none;
+	.chat-button-top-level {
+		bottom: 0.75rem !important;
+		right: 0.75rem !important;
+		width: 55px !important;
+		height: 55px !important;
+		min-width: 55px !important;
+		min-height: 55px !important;
 	}
+	
+	.chat-interface-top-level {
+		bottom: 5rem !important;
+		right: 0.75rem !important;
+		left: 0.75rem !important;
+		width: calc(100vw - 1.5rem) !important;
+		height: calc(100vh - 6.5rem) !important;
+		max-height: 70vh !important;
+		border-radius: 0.75rem 0.75rem 0 0 !important;
+		border-bottom: none !important;
+	}
+}
+
+/* Safe area support for devices with notches */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+	.chat-button-top-level {
+		bottom: calc(1rem + env(safe-area-inset-bottom)) !important;
+		right: calc(1rem + env(safe-area-inset-right)) !important;
+	}
+	
+	.chat-interface-top-level {
+		bottom: calc(5.5rem + env(safe-area-inset-bottom)) !important;
+		right: calc(1rem + env(safe-area-inset-right)) !important;
+	}
+	
+	@media (max-width: 639px) {
+		.chat-button-top-level {
+			bottom: calc(0.75rem + env(safe-area-inset-bottom)) !important;
+			right: calc(0.75rem + env(safe-area-inset-right)) !important;
+		}
+		
+		.chat-interface-top-level {
+			bottom: calc(5rem + env(safe-area-inset-bottom)) !important;
+			right: calc(0.75rem + env(safe-area-inset-right)) !important;
+			left: calc(0.75rem + env(safe-area-inset-left)) !important;
+		}
+	}
+}
+
+/* Дополнительные стили для лучшей интеграции */
+* {
+	box-sizing: border-box;
+}
+
+/* Убираем возможные конфликты с родительскими контейнерами */
+:deep(.container) {
+	overflow: visible !important;
+}
+
+/* Стили для правильного z-index управления */
+.chat-button-top-level,
+.chat-interface-top-level {
+	isolation: isolate;
+}
+
+/* Дополнительная защита от переопределения стилей */
+.chat-button-top-level {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	border-radius: 50% !important;
+	cursor: pointer !important;
+	user-select: none !important;
+}
+
+/* Фиксируем размеры для разных устройств */
+@media (min-width: 640px) {
+	.chat-button-top-level {
+		width: 3.5rem !important;
+		height: 3.5rem !important;
+		min-width: 3.5rem !important;
+		min-height: 3.5rem !important;
+	}
+}
+
+@media (max-width: 639px) and (min-width: 0px) {
+	.chat-button-top-level {
+		width: 3rem !important;
+		height: 3rem !important;
+		min-width: 3rem !important;
+		min-height: 3rem !important;
+	}
+}
+
+/* Обеспечиваем видимость кнопки поверх всех элементов */
+.chat-button-top-level {
+	backdrop-filter: none !important;
+	background-clip: padding-box !important;
 }
 </style>
